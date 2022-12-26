@@ -11,15 +11,18 @@ import {
 import "./App.css";
 import Addtaskform from "./components/Addtaskform";
 import Updateform from "./components/Updateform";
+import Displayform from "./components/Displayform";
 
 function App() {
   // Tasks Sate
   const [toDo, setToDo] = useState([]);
-
+   
   // Temp store
   const [newTask, setNewTask] = useState("");
   const [updateData, setUpdateData] = useState("");
 
+
+  
   //  add task
   const addTask = () => {
     if (newTask) {
@@ -29,7 +32,6 @@ function App() {
       setNewTask('')
     }
   };
-
   //  delete task
   const deleteTask = (id) => {
     let newTasks = toDo.filter( task => task.id!== id)
@@ -97,47 +99,20 @@ function App() {
         addTask={addTask}
         />
 )}
+        {/* Display task */}
+        {toDo && toDo.length ? "" : "No Tasks..."}
 
+        <Displayform
+        toDo={toDo}
+        markDone={markDone}
 
-
-
-
-{/* Display task */}
-      {toDo && toDo.length ? "" : "No Tasks..."}
-      
-      <>
-
-{toDo && toDo
-      .sort((a,b)=> a.id> b.id ? 1 : -1)
-      .map((task, index) => {
-          return (
-            <React.Fragment key={task.id}>
-              <div className="col taskBg">
-                <div className={task.status ? 'done' : ''}>
-                  <span className="taskNumber">{index + 1}.</span>
-                  <span className="taskText">{task.title}</span>
-                </div>
-                <div className="iconsWrap">
-                  <span title="Completed / Not Completed" onClick={()=>{markDone(task.id)}}><FontAwesomeIcon icon={faCircleCheck}/></span>
-
-
-                  {task.status ? null :(
-                    <span title="Edit" onClick={ ()=>setUpdateData({
-                      id:task.id,
-                      title:task.title,
-                      status:task.status ? true : false
-                    })}><FontAwesomeIcon icon={faPen}/></span>
-                  )}
-
-
-                  <span title="Delete" onClick={()=>{deleteTask(task.id)}}><FontAwesomeIcon icon={faTrashCan}/></span>
-                </div>
-              </div>
-            </React.Fragment>
-          );
-        })}
-
-    </>
+        setUpdateData={setUpdateData}
+        deleteTask={deleteTask}
+        faTrashCan={faTrashCan}
+        FontAwesomeIcon={FontAwesomeIcon}
+        faCircleCheck={faCircleCheck}
+        faPen={faPen}
+        />
     </div>
   );
 }

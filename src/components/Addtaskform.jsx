@@ -18,7 +18,7 @@ function Addtaskform({newTask,setNewTask,addTask}) {
           </div>
         </div>
         <br/>
-        </>
+    </>
   )
 }
 
